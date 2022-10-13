@@ -23,6 +23,7 @@ router.post('/', [
     check('nombre', 'El usuario es obligatorio').notEmpty(),
     check('password', 'El password es obligatorio').notEmpty(),
     check('nombre').custom( usuarioExiste ),
+    check('rol', 'No es un rol válido!').isIn(['ADMIN_ROLE', 'USER_ROLE']),
     validarCampos
 ], usuariosPost);
 
