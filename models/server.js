@@ -1,5 +1,5 @@
 const express = require('express');
-const { dbConnection } = require('../tadabase/config');
+const { dbConnection } = require('../database/config');
 
 class Server {
 
