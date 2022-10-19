@@ -53,7 +53,7 @@ const usuariosPost = async(req, res = response) => {
     await usuario.save();
 
     res.json({
-        msg: 'post API - controlador',
+        msg: 'Usuario guardado correctamente',
         //body
         //nombre,
         //edad
@@ -87,15 +87,43 @@ const usuariosPut = async(req, res = response) => {
 const usuariosDelete = async(req, res = response) => {
 
    const { id }  = req.params;
+   const { admin } = req.query;
+
+   if ( admin ) {
+      const usuario = await Usuario.findByIdAndDelete( id );
+      return res.json({
+         msg: 'Usuario eliminado fisicamente',
+         usuario
+      });
+
+   }
 
    // Borrado fisico
    //const usuario = await Usuario.findByIdAndDelete( id );
 
    // Borrado por marca
    const usuario = await Usuario.findByIdAndUpdate( id, { estado: false } );
+   const usuarioAutenticado = req.usuario;
+
+
+                        /* BORRADO OTRA OPCION
+                        const usuario = await Usuario.findById( id );  
+
+                        if ( !usuario.estado ) {
+                           return res.status(400).json({msg: "usuario no existe"});
+                           
+                        }
+                        var nombreBorrado = usuario.nombre + '**';
+                        await Usuario.findByIdAndUpdate( id,
+                           { 
+                              estado: false,
+                              nombre: nombreBorrado
+                           }
+                        );   */
 
     res.json( {
-      usuario
+      usuario,
+      usuarioAutenticado
       
    } );
  }

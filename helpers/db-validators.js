@@ -16,7 +16,7 @@ const usuarioExiste = async( nombre = '' ) => {
 }
 
 const usuarioExistePorId = async( id ) => {
-    // Verificar usuario duplicado
+    // Verificar si existe usuario
     const existeUsuario = await Usuario.findById(id)
     if ( !existeUsuario ) {
         throw new Error(`El id no existe: ${id}`);
